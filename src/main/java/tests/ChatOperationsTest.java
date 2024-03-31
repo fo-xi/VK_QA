@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import org.openqa.selenium.By;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,8 +15,8 @@ import pages.MessagePage;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class ChatOperationsTest extends BaseTest {
-    private final ElementsCollection CHAT_LIST = $$("msg-chats-list-item");
-    private final ElementsCollection RESULTS_LIST = $$("msg-search-results-item");
+    private final ElementsCollection CHAT_LIST = $$(By.xpath(".//msg-chats-list-item"));
+    private final ElementsCollection RESULTS_LIST = $$(By.xpath(".//msg-search-results-item"));
     private final String CHAT_NAME = UUID.randomUUID().toString();
     private final LoginPage loginPage = new LoginPage();
     private MainPage mainPage;

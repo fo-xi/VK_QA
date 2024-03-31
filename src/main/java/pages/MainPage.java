@@ -8,11 +8,18 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class MainPage {
 
-    private final SelenideElement PROFILE_SETTINGS_BUTTON = $(By.cssSelector(".ucard-mini.toolbar_ucard.js-toolbar-menu.__a11y"));
-    private final SelenideElement TOOLBAR_LOGOUT_BUTTON = $(By.cssSelector(".toolbar_accounts-user-delete-button"));
-    private final SelenideElement LOGOUT_FORM = $(By.id("hook_Form_PopLayerLogoffUserModalForm"));
-    private final SelenideElement LOGOUT_BUTTON = $(By.id("hook_FormButton_logoff.confirm_not_decorate"));
+    private final SelenideElement PROFILE_SETTINGS_BUTTON =
+            $(By.xpath(".//*[@aria-controls='user-dropdown-menu']"));
+    private final SelenideElement LOGOUT_FORM = $(By.xpath(".//a[@data-l='t,logout']"));
+    private final SelenideElement LOGOUT_BUTTON = $(By.xpath(".//input[@data-l='t,logout']"));
     private final SelenideElement MESSAGE_BUTTON = $(By.id("msg_toolbar_button"));
+    private final SelenideElement USER_BUTTON = $(By.xpath(".//*[@data-l='t,userPage']"));
+    private final SelenideElement FEED_BUTTON = $(By.xpath(".//*[@data-l='t,userMain']"));
+    private final SelenideElement HOBBY_BUTTON = $(By.xpath(".//*[@data-l='t,hobby']"));
+
+    public MainPage() {
+        checkPage();
+    }
 
     public MessagePage goToMessage() {
         MESSAGE_BUTTON.shouldBe(visible).click();
@@ -21,8 +28,13 @@ public class MainPage {
 
     public void logout() {
         PROFILE_SETTINGS_BUTTON.shouldBe(visible).click();
-        TOOLBAR_LOGOUT_BUTTON.shouldBe(visible).click();
         LOGOUT_FORM.shouldBe(visible).click();
         LOGOUT_BUTTON.shouldBe(visible).click();
+    }
+
+    private void checkPage() {
+        USER_BUTTON.shouldBe(visible);
+        FEED_BUTTON.shouldBe(visible);
+        HOBBY_BUTTON.shouldBe(visible);
     }
 }
