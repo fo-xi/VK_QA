@@ -23,6 +23,12 @@ public class MessagePage {
     private final SelenideElement REMOVE_CHAT_BUTTON =
             $(By.xpath(".//*[@data-tsid='remove-dialog-btn']"));
     private final SelenideElement REMOVE_BUTTON = $(By.xpath(".//*[@data-tsid='confirm-primary']"));
+    private final SelenideElement MESSAGE_FIELD =
+            $(By.xpath(".//*[@data-tsid='write_msg_input-input']"));
+    private final SelenideElement SEND_MESSAGE_BUTTON = $(By.xpath(".//*[@data-tsid='button_send']"));
+    private final SelenideElement MESSAGE_CHECKBOX = $(By.xpath(".//*[@data-l='t,selectMultiple']"));
+    private final SelenideElement REMOVE_MESSAGE_BUTTON =
+            $(By.xpath(".//*[@data-tsid='control-remove']"));
 
     public MessagePage() {
         checkPage();
@@ -32,18 +38,29 @@ public class MessagePage {
         HOME_BUTTON.shouldBe(visible).click();
         PLUS_BUTTON.shouldBe(visible).click();
         CREATE_CHAT_BUTTON.shouldBe(visible).click();
-        CHAT_INPUT.setValue(name);
-        CREATE_NEW_CHAT_BUTTON.click();
+        CHAT_INPUT.shouldBe(visible).setValue(name);
+        CREATE_NEW_CHAT_BUTTON.shouldBe(visible).click();
     }
 
     public void searchChat(String searchLine) {
         CHAT_SEARCH_INPUT.shouldBe(visible).click();
-        CHAT_SEARCH_INPUT.setValue(searchLine);
+        CHAT_SEARCH_INPUT.shouldBe(visible).setValue(searchLine);
     }
 
     public void removeChat() {
         CHAT_INFORMATION_BUTTON.shouldBe(visible).click();
         REMOVE_CHAT_BUTTON.shouldBe(visible).click();
+        REMOVE_BUTTON.shouldBe(visible).click();
+    }
+
+    public void sendMessage(String message) {
+        MESSAGE_FIELD.shouldBe(visible).setValue(message);
+        SEND_MESSAGE_BUTTON.shouldBe(visible).click();
+    }
+
+    public void removeMessage() {
+        MESSAGE_CHECKBOX.shouldBe(visible).click();
+        REMOVE_MESSAGE_BUTTON.shouldBe(visible).click();
         REMOVE_BUTTON.shouldBe(visible).click();
     }
 
