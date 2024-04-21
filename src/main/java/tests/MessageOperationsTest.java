@@ -1,14 +1,13 @@
 package tests;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import pages.LoginPage;
@@ -21,9 +20,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Message Operations Test")
 public class MessageOperationsTest extends BaseTest {
+    private final static int NUMBER_CHATS = 3;
     private final String CHAT_NAME = UUID.randomUUID().toString();
     private MainPage mainPage;
     private MessagePage messagePage;
+    private List<String> chatNames = new ArrayList<>();
 
     @BeforeEach
     public void setup() {
@@ -39,6 +40,20 @@ public class MessageOperationsTest extends BaseTest {
     public void createChatTest() {
         assertTrue(messagePage.getChatList().findBy(Condition.text(CHAT_NAME)).shouldBe(Condition.exist).exists(),
                 "Chat must exist after creation");
+    }
+
+    @TestFactory
+    @Tag("Chat")
+    @DisplayName("Create Multiple Chats Test")
+    Stream<DynamicTest> createMultipleChatsTest() {
+        generateRandomChatNames(NUMBER_CHATS);
+        return chatNames.stream().map(chatName ->
+                DynamicTest.dynamicTest("Chat must exist after creation: " + chatName, () -> {
+                    messagePage.createChat(chatName);
+                    assertTrue(messagePage.getChatList().findBy(Condition.text(chatName))
+                            .shouldBe(Condition.exist).exists());
+                })
+        );
     }
 
     @Test
@@ -96,11 +111,30 @@ public class MessageOperationsTest extends BaseTest {
                 shouldBe(visible.because("The chat should be visible before clicking")).click();
     }
 
+    private void generateRandomChatNames(int count) {
+        for (int i = 0; i < count; i++) {
+            chatNames.add(UUID.randomUUID().toString());
+        }
+    }
+
+    private void removeMultipleChats() {
+        for (String chatName : chatNames) {
+            if (messagePage.getChatList().findBy(Condition.text(chatName)).exists()) {
+                messagePage.searchChat(chatName);
+                messagePage.getResultsList().findBy(Condition.text(chatName)).
+                        shouldBe(visible.because("The chat should be visible before clicking")).click();
+                messagePage.removeChat();
+            }
+        }
+    }
+
     @AfterEach
     public void setDown() {
         if (messagePage.getChatList().findBy(Condition.text(CHAT_NAME)).exists()) {
             removeChat();
         }
+
+        removeMultipleChats();
 
         if (mainPage != null) {
             mainPage.logout();
