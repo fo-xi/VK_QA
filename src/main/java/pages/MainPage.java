@@ -9,7 +9,7 @@ public class MainPage {
     private static final By MESSAGE_BUTTON = By.xpath(".//*[@data-l='t,messages']");
     private static final By PROFILE_SETTINGS_BUTTON =
             By.xpath(".//*[@aria-controls='user-dropdown-menu']");
-    private static final By LOGOUT_FORM = By.xpath(".//a[@data-l='t,logout']");
+    private static final By LOGOUT_FORM = By.xpath(".//*[text()='Выйти']");
     private static final By LOGOUT_BUTTON = By.xpath(".//input[@data-l='t,logout']");
     private static final By USER_BUTTON = By.xpath(".//*[@data-l='t,userPage']");
     private static final By FEED_BUTTON = By.xpath(".//*[@data-l='t,userMain']");

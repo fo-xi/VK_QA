@@ -15,9 +15,11 @@ public class MessagePage {
     private static final By MESSAGE = By.xpath(".//msg-message");
     private static final By HOME_BUTTON = By.xpath(".//*[@data-tsid='msg_settings_button']");
     private static final By PLUS_BUTTON = By.xpath(".//*[@data-l='t, createMenu']");
-    private static final By CREATE_CHAT_BUTTON = By.xpath(".//msg-menu[@id='msg-new-menu']/slot/msg-menu-item");
+    private static final By CREATE_CHAT_BUTTON
+            = By.xpath(".//msg-menu[@id='msg-new-menu']/slot/msg-menu-item");
     private static final By CHAT_INPUT = By.xpath(".//*[@data-tsid='chat-theme-input']");
-    private static final By CREATE_NEW_CHAT_BUTTON = By.xpath(".//*[@data-tsid='finish_create_chat_button']");
+    private static final By CREATE_NEW_CHAT_BUTTON
+            = By.xpath(".//*[@data-tsid='finish_create_chat_button']");
     private static final By SEARCH_CHAT_BUTTON = By.xpath(".//*[@data-tsid='chat-search-input']");
     private static final By CHAT_INFORMATION_BUTTON = By.xpath(".//*[@data-tsid='chat_info_button']");
     private static final By REMOVE_CHAT_BUTTON = By.xpath(".//*[@data-tsid='remove-dialog-btn']");
@@ -26,7 +28,7 @@ public class MessagePage {
     private static final By SEND_MESSAGE_BUTTON = By.xpath(".//*[@data-tsid='button_send']");
     private static final By MESSAGE_CHECKBOX = By.xpath(".//*[@data-l='t,selectMultiple']");
     private static final By REMOVE_MESSAGE_BUTTON = By.xpath(".//*[@data-tsid='control-remove']");
-    private static final By MESSAGE_TITLE = By.xpath(".//msg-l10n[text()='Сообщения']");
+    private static final By MESSAGE_TITLE = By.xpath(".//*[text()='Сообщения']");
 
     public MessagePage() {
         checkPage();
