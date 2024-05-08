@@ -100,6 +100,16 @@ public class MessageOperationsTest extends BaseTest {
                 "Message should not exist after deletion");
     }
 
+    @Test
+    @Tag("Message")
+    @DisplayName("Close Message Window Test")
+    public void closeMessageWindowTest() {
+        removeChat();
+        messagePage.closeMessageWindow();
+        assertFalse(messagePage.getMessageWindow().exists(),
+                "The message box should not exist after it is deleted");
+    }
+
     private void removeChat() {
         searchChat();
         messagePage.removeChat();

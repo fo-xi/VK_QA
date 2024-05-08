@@ -1,6 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Condition.visible;
@@ -29,6 +30,8 @@ public class MessagePage {
     private static final By MESSAGE_CHECKBOX = By.xpath(".//*[@data-l='t,selectMultiple']");
     private static final By REMOVE_MESSAGE_BUTTON = By.xpath(".//*[@data-tsid='control-remove']");
     private static final By MESSAGE_TITLE = By.xpath(".//*[text()='Сообщения']");
+    private static final By CLOSE_MESSAGE_WINDOW_BUTTON = By.xpath(".//*[@data-l='t,closeLayer']");
+    private static final By MESSAGE_WINDOW = By.xpath(".//*[@data-l='msg_layer']");
 
     public MessagePage() {
         checkPage();
@@ -77,6 +80,11 @@ public class MessagePage {
                 .because("The remove button should be visible before clicking")).click();
     }
 
+    public void closeMessageWindow() {
+        $(CLOSE_MESSAGE_WINDOW_BUTTON).shouldBe(visible
+                .because("The close message box button must be visible before clicking")).click();
+    }
+
     private void checkPage() {
         $(HOME_BUTTON).shouldBe(visible
                 .because("The home button should be visible"));
@@ -100,5 +108,9 @@ public class MessagePage {
 
     public ElementsCollection getMessage() {
         return $$(MESSAGE);
+    }
+
+    public SelenideElement getMessageWindow() {
+        return $(MESSAGE_WINDOW);
     }
 }
