@@ -1,8 +1,8 @@
 package pages;
 
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+import utils.ElementCollectionWrapper;
 import utils.MessageToolbar;
 
 import static com.codeborne.selenide.Condition.visible;
@@ -94,20 +94,20 @@ public class MessagePage {
                 .because("The message title should be visible"));
     }
 
-    public ElementsCollection getChatList() {
-        return $$(CHAT_LIST);
+    public ElementCollectionWrapper getChatList() {
+        return new ElementCollectionWrapper($$(CHAT_LIST));
     }
 
-    public ElementsCollection getResultsList() {
-        return $$(RESULTS_LIST);
+    public ElementCollectionWrapper getResultsList() {
+        return new ElementCollectionWrapper($$(RESULTS_LIST));
     }
 
-    public ElementsCollection getMessageList() {
-        return $$(MESSAGE_LIST);
+    public ElementCollectionWrapper getMessageList() {
+        return new ElementCollectionWrapper($$(MESSAGE_LIST));
     }
 
-    public ElementsCollection getMessage() {
-        return $$(MESSAGE);
+    public ElementCollectionWrapper getMessage() {
+        return new ElementCollectionWrapper($$(MESSAGE));
     }
 
     public SelenideElement getMessageWindow() {

@@ -38,7 +38,7 @@ public class MessageOperationsTest extends BaseTest {
     @Tag("Chat")
     @DisplayName("Create Chat Test")
     public void createChatTest() {
-        assertTrue(messagePage.getChatList().findBy(Condition.text(CHAT_NAME)).shouldBe(Condition.exist).exists(),
+        assertTrue(messagePage.getChatList().searchElement(CHAT_NAME).shouldBe(Condition.exist).exists(),
                 "Chat must exist after creation");
     }
 
@@ -50,7 +50,7 @@ public class MessageOperationsTest extends BaseTest {
         return chatNames.stream().map(chatName ->
                 DynamicTest.dynamicTest("Chat must exist after creation: " + chatName, () -> {
                     messagePage.createChat(chatName);
-                    assertTrue(messagePage.getChatList().findBy(Condition.text(chatName))
+                    assertTrue(messagePage.getChatList().searchElement(chatName)
                             .shouldBe(Condition.exist).exists());
                 })
         );
@@ -61,7 +61,7 @@ public class MessageOperationsTest extends BaseTest {
     @DisplayName("Search Chat Test")
     public void searchChatTest() {
         messagePage.searchChat(CHAT_NAME);
-        assertTrue(messagePage.getResultsList().findBy(Condition.text(CHAT_NAME)).exists(),
+        assertTrue(messagePage.getResultsList().searchElement(CHAT_NAME).exists(),
                 "Chat should be found after searching");
     }
 
@@ -71,7 +71,7 @@ public class MessageOperationsTest extends BaseTest {
     public void removeChatTest() {
         removeChat();
         Selenide.refresh();
-        assertFalse(messagePage.getChatList().findBy(Condition.text(CHAT_NAME)).exists(),
+        assertFalse(messagePage.getChatList().searchElement(CHAT_NAME).exists(),
                 "Chat should not exist after deletion");
     }
 
@@ -82,7 +82,7 @@ public class MessageOperationsTest extends BaseTest {
     public void SendMessagesTest(String messageText) {
         searchChat();
         messagePage.sendMessage(messageText);
-        assertTrue(messagePage.getMessageList().findBy(Condition.text(messageText)).exists(),
+        assertTrue(messagePage.getMessageList().searchElement(messageText).exists(),
                 "Message must exist after sending");
     }
 
@@ -93,10 +93,10 @@ public class MessageOperationsTest extends BaseTest {
         String firstMessage = UUID.randomUUID().toString();
         searchChat();
         messagePage.sendMessage(firstMessage);
-        messagePage.getMessage().findBy(Condition.text(firstMessage)).shouldBe(visible).hover();
+        messagePage.getMessage().searchElement(firstMessage).shouldBe(visible).hover();
         messagePage.removeMessage();
         Selenide.refresh();
-        assertFalse(messagePage.getMessageList().findBy(Condition.text(firstMessage)).exists(),
+        assertFalse(messagePage.getMessageList().searchElement(firstMessage).exists(),
                 "Message should not exist after deletion");
     }
 
@@ -117,7 +117,7 @@ public class MessageOperationsTest extends BaseTest {
 
     private void searchChat() {
         messagePage.searchChat(CHAT_NAME);
-        messagePage.getResultsList().findBy(Condition.text(CHAT_NAME))
+        messagePage.getResultsList().searchElement(CHAT_NAME)
                 .shouldBe(visible.because("The chat should be visible before clicking")).click();
     }
 
@@ -129,9 +129,9 @@ public class MessageOperationsTest extends BaseTest {
 
     private void removeMultipleChats() {
         for (String chatName : chatNames) {
-            if (messagePage.getChatList().findBy(Condition.text(chatName)).exists()) {
+            if (messagePage.getChatList().searchElement(chatName).exists()) {
                 messagePage.searchChat(chatName);
-                messagePage.getResultsList().findBy(Condition.text(chatName))
+                messagePage.getResultsList().searchElement(chatName)
                         .shouldBe(visible.because("The chat should be visible before clicking")).click();
                 messagePage.removeChat();
             }
@@ -140,7 +140,7 @@ public class MessageOperationsTest extends BaseTest {
 
     @AfterEach
     public void setDown() {
-        if (messagePage.getChatList().findBy(Condition.text(CHAT_NAME)).exists()) {
+        if (messagePage.getChatList().searchElement(CHAT_NAME).exists()) {
             removeChat();
         }
 
