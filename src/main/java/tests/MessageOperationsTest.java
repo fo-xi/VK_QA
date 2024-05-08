@@ -117,8 +117,8 @@ public class MessageOperationsTest extends BaseTest {
 
     private void searchChat() {
         messagePage.searchChat(CHAT_NAME);
-        messagePage.getResultsList().findBy(Condition.text(CHAT_NAME)).
-                shouldBe(visible.because("The chat should be visible before clicking")).click();
+        messagePage.getResultsList().findBy(Condition.text(CHAT_NAME))
+                .shouldBe(visible.because("The chat should be visible before clicking")).click();
     }
 
     private void generateRandomChatNames(int count) {
@@ -131,8 +131,8 @@ public class MessageOperationsTest extends BaseTest {
         for (String chatName : chatNames) {
             if (messagePage.getChatList().findBy(Condition.text(chatName)).exists()) {
                 messagePage.searchChat(chatName);
-                messagePage.getResultsList().findBy(Condition.text(chatName)).
-                        shouldBe(visible.because("The chat should be visible before clicking")).click();
+                messagePage.getResultsList().findBy(Condition.text(chatName))
+                        .shouldBe(visible.because("The chat should be visible before clicking")).click();
                 messagePage.removeChat();
             }
         }
