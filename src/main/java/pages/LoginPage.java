@@ -2,11 +2,14 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.LoadableComponent;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
-public class LoginPage {
+public class LoginPage extends LoadableComponent<LoginPage> {
+    private WebDriver driver;
     private static final String LOGIN = "technopol51";
     private static final String PASSWORD = "technopolisPassword";
     private static final By MESSAGE_BUTTON = By.xpath(".//*[@data-l='t,messages']");
@@ -18,8 +21,8 @@ public class LoginPage {
     private static final By RESTORE_BUTTON = By.xpath(".//*[@data-l='t,restore']");
     private static final By QR_BUTTON = By.xpath(".//*[@data-l='t,get_qr']");
 
-    public LoginPage() {
-        checkPage();
+    public LoginPage(WebDriver driver) {
+        this.driver = driver;
     }
 
     public MainPage login() {
@@ -27,12 +30,6 @@ public class LoginPage {
         $(PASSWORD_FIELD).setValue(PASSWORD);
         $(SIGN_IN_BUTTON).shouldBe(visible.because("The sign in button should be visible before clicking")).click();
         return new MainPage();
-    }
-
-    private void checkPage() {
-        $(SIGN_IN_BUTTON).shouldBe(visible.because("The sign in button should be visible"));
-        $(RESTORE_BUTTON).shouldBe(visible.because("The restore button should be visible"));
-        $(QR_BUTTON).shouldBe(visible.because("The QR button should be visible"));
     }
 
     public SelenideElement getMessageButton() {
@@ -45,5 +42,21 @@ public class LoginPage {
 
     public SelenideElement getGuestsButton() {
         return $(GUESTS_BUTTON);
+    }
+
+    @Override
+    protected void load() {
+        driver.get("https://ok.ru/");
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        checkPage();
+    }
+
+    private void checkPage() {
+        $(SIGN_IN_BUTTON).shouldBe(visible.because("The sign in button should be visible"));
+        $(RESTORE_BUTTON).shouldBe(visible.because("The restore button should be visible"));
+        $(QR_BUTTON).shouldBe(visible.because("The QR button should be visible"));
     }
 }

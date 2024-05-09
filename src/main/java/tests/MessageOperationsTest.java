@@ -28,7 +28,7 @@ public class MessageOperationsTest extends BaseTest {
 
     @BeforeEach
     public void setup() {
-        LoginPage loginPage = new LoginPage();
+        LoginPage loginPage = new LoginPage(driver).get();
         mainPage = loginPage.login();
         messagePage = mainPage.goToMessage();
         messagePage.createChat(CHAT_NAME);

@@ -18,7 +18,7 @@ public class ValidLoginTest extends BaseTest {
     @Tag("Login")
     @DisplayName("Login Test")
     public void loginTest() {
-        LoginPage loginPage = new LoginPage();
+        LoginPage loginPage = new LoginPage(driver).get();
         mainPage = loginPage.login();
 
         assertAll("Login Test",
