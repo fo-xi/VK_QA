@@ -34,8 +34,7 @@ public class MessagePage {
         checkPage();
     }
 
-    public void createChat(String name) {
-
+    public MessagePage createChat(String name) {
         messageToolbar.getHomeButton().
                 shouldBe(visible.because("The home button should be visible before clicking")).click();
         messageToolbar.getPlusButton().
@@ -46,43 +45,49 @@ public class MessagePage {
                 .because("The chat input should be visible before setting value")).setValue(name);
         $(CREATE_NEW_CHAT_BUTTON).shouldBe(visible
                 .because("The create new chat button should be visible before clicking")).click();
+        return this;
     }
 
-    public void searchChat(String searchLine) {
+    public MessagePage searchChat(String searchLine) {
         messageToolbar.getSearchChatInput().shouldBe(visible
                 .because("The search chat button should be visible before clicking")).click();
         messageToolbar.getSearchChatInput().shouldBe(visible
                 .because("The search chat button should be visible before setting value")).setValue(searchLine);
+        return this;
     }
 
-    public void removeChat() {
+    public MessagePage removeChat() {
         $(CHAT_INFORMATION_BUTTON).shouldBe(visible
                 .because("The chat information button should be visible before clicking")).click();
         $(REMOVE_CHAT_BUTTON).shouldBe(visible
                 .because("The remove chat button should be visible before clicking")).click();
         $(REMOVE_BUTTON).shouldBe(visible
                 .because("The remove button should be visible before clicking")).click();
+        return this;
     }
 
-    public void sendMessage(String message) {
+    public MessagePage sendMessage(String message) {
         $(MESSAGE_FIELD).shouldBe(visible
                 .because("The message field should be visible before setting value")).setValue(message);
         $(SEND_MESSAGE_BUTTON).shouldBe(visible
                 .because("The send message button should be visible before clicking")).click();
+        return this;
     }
 
-    public void removeMessage() {
+    public MessagePage removeMessage() {
         $(MESSAGE_CHECKBOX).shouldBe(visible
                 .because("The message checkbox should be visible before clicking")).click();
         $(REMOVE_MESSAGE_BUTTON).shouldBe(visible
                 .because("The remove message button should be visible before clicking")).click();
         $(REMOVE_BUTTON).shouldBe(visible
                 .because("The remove button should be visible before clicking")).click();
+        return this;
     }
 
-    public void closeMessageWindow() {
+    public MessagePage closeMessageWindow() {
         $(CLOSE_MESSAGE_WINDOW_BUTTON).shouldBe(visible
                 .because("The close message box button must be visible before clicking")).click();
+        return this;
     }
 
     private void checkPage() {

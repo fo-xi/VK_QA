@@ -7,7 +7,13 @@ import java.util.stream.Stream;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import pages.LoginPage;
@@ -50,8 +56,7 @@ public class MessageOperationsTest extends BaseTest {
         return chatNames.stream().map(chatName ->
                 DynamicTest.dynamicTest("Chat must exist after creation: " + chatName, () -> {
                     messagePage.createChat(chatName);
-                    assertTrue(messagePage.getChatList().searchElement(chatName)
-                            .shouldBe(Condition.exist).exists());
+                    assertTrue(messagePage.getChatList().searchElement(chatName).shouldBe(Condition.exist).exists());
                 })
         );
     }
@@ -80,8 +85,7 @@ public class MessageOperationsTest extends BaseTest {
     @Tag("Message")
     @DisplayName("Send Message Test")
     public void SendMessagesTest(String messageText) {
-        searchChat();
-        messagePage.sendMessage(messageText);
+        messagePage.searchChat(CHAT_NAME).sendMessage(messageText);
         assertTrue(messagePage.getMessageList().searchElement(messageText).exists(),
                 "Message must exist after sending");
     }
@@ -91,8 +95,7 @@ public class MessageOperationsTest extends BaseTest {
     @DisplayName("Remove Message Test")
     public void removeMessageTest() {
         String firstMessage = UUID.randomUUID().toString();
-        searchChat();
-        messagePage.sendMessage(firstMessage);
+        messagePage.searchChat(CHAT_NAME).sendMessage(firstMessage);
         messagePage.getMessage().searchElement(firstMessage).shouldBe(visible).hover();
         messagePage.removeMessage();
         Selenide.refresh();
@@ -111,14 +114,10 @@ public class MessageOperationsTest extends BaseTest {
     }
 
     private void removeChat() {
-        searchChat();
-        messagePage.removeChat();
-    }
-
-    private void searchChat() {
         messagePage.searchChat(CHAT_NAME);
         messagePage.getResultsList().searchElement(CHAT_NAME)
                 .shouldBe(visible.because("The chat should be visible before clicking")).click();
+        messagePage.removeChat();
     }
 
     private void generateRandomChatNames(int count) {
