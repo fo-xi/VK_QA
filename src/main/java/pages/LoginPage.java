@@ -4,14 +4,14 @@ import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import utils.User;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
 public class LoginPage extends LoadableComponent<LoginPage> {
     private WebDriver driver;
-    private static final String LOGIN = "technopol51";
-    private static final String PASSWORD = "technopolisPassword";
+    private User user;
     private static final By MESSAGE_BUTTON = By.xpath(".//*[@data-l='t,messages']");
     private static final By NOTIFICATIONS_BUTTON = By.xpath(".//*[@data-l='t,notifications']");
     private static final By GUESTS_BUTTON = By.xpath(".//*[@data-l='t,guests']");
@@ -23,11 +23,12 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
+        this.user = new User("technopol51", "technopolisPassword");
     }
 
     public MainPage login() {
-        $(LOGIN_FIELD).setValue(LOGIN);
-        $(PASSWORD_FIELD).setValue(PASSWORD);
+        $(LOGIN_FIELD).setValue(user.getLogin());
+        $(PASSWORD_FIELD).setValue(user.getPassword());
         $(SIGN_IN_BUTTON).shouldBe(visible.because("The sign in button should be visible before clicking")).click();
         return new MainPage();
     }
